@@ -70,7 +70,8 @@ server <- function(input, output, session) {
         geom_path(show.legend = FALSE, alpha = 0.7, size = 0.9) +
         labs(x = "Time", y = "Number of individuals")
       outfile <- tempfile(tmpdir = "img", fileext = ".png")
-      ggsave(filename = outfile, plot = p)
+      ggsave(filename = outfile, plot = p, width = info$width()/72,
+             height = info$height()/72, units = "cm")
     }
     
     list(src = outfile,
@@ -104,7 +105,8 @@ server <- function(input, output, session) {
         geom_point()+
         labs(x = "Number of species 2", y = "Number of species 1")
       outfile <- tempfile(tmpdir = "img", fileext = ".png")
-      ggsave(filename = outfile, plot = p)
+      ggsave(filename = outfile, plot = p, width = info$width()/72,
+             height = info$height()/72, units = "cm")
     }
     
     list(src = outfile,
