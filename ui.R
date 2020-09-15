@@ -67,13 +67,15 @@ ui <- fluidPage(
                         "Exchange rate, 2 from 1:",
                         min = 0,
                         max = 2,
-                        value = 1)
+                        value = 1),
+            actionButton("go",
+                         "Go!")
         ),
 
         # Show a plot of the generated distribution
         mainPanel(
-           #plotOutput("distPlot")
-            textOutput("test")
+            textOutput("test"),
+            imageOutput("NvtPlot")
         )
     )
 )

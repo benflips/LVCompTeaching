@@ -39,6 +39,6 @@ LVComp <- function(t, N, pars){
   # maxTime is maximum number of generations
   # # pars are list r1, r2, a12, a21, K
 LVSolve <- function(N0, maxTime = 100, pars){
-  ode(y = N0, times = 0:maxTime, func = LVComp, parms = pars)
+  as.data.frame(ode(y = N0, times = 0:maxTime, func = LVComp, parms = pars))
 }
 
