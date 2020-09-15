@@ -17,24 +17,27 @@
 ##
 ## --------------------------
 ## load up the packages we will need 
-
+library(shiny)
+library(tidyr)
+library(ggplot2)
+library(gifski)
+library(gganimate)
 ## ---------------------------
 
 ## load up our functions into memory
-
+source("LVFunctions.R")
 ## ---------------------------
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
-  output$distPlot <- renderPlot({
-    # generate bins based on input$bins from ui.R
-    x    <- faithful[, 2]
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white')
+  # isolated reactive for parameter list
+  pList <- reactive({
+    list(r1=input$r1, r2=input$r2, a12=input$a12, a21=input$a21, K=1000)
   })
+  
+  output$test <- renderText(pList()$r1)
+  
 }
 
 

@@ -17,14 +17,17 @@
 ##
 ## --------------------------
 ## load up the packages we will need 
-
+library(shiny)
+library(ggplot2)
+library(gifski)
+library(gganimate)
 ## ---------------------------
 
 ## load up our functions into memory
 
 ## ---------------------------
 
-library(shiny)
+
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -70,6 +73,7 @@ ui <- fluidPage(
         # Show a plot of the generated distribution
         mainPanel(
            #plotOutput("distPlot")
+            textOutput("test")
         )
     )
 )
