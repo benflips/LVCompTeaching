@@ -35,7 +35,7 @@ server <- function(input, output, session) {
   
   # isolated reactive for parameter list
   pList <- reactive({
-    list(r1=input$r1, r2=input$r2, a12=input$a12, a21=input$a21, K=1000)
+    list(r1=input$r1, r2=input$r2, a12=input$a12, a21=input$a21, K1=input$K1, K2 = input$K2)
   })
   
 
@@ -43,6 +43,7 @@ server <- function(input, output, session) {
   observeEvent(input$go, {
     n$short <- LVSolve(N0 = c(N1=input$N1, N2=input$N2), maxTime = input$gens, pars = pList())
     n$long <- pivot_longer(n$short, cols = c(N1, N2), names_to = "sp", values_to = "N")
+    n$isoPoints <- isoPoints(pList())
   }, ignoreNULL = FALSE)
   
   #output$test <- renderText(session$clientData$output_myImage_width)
@@ -124,6 +125,16 @@ server <- function(input, output, session) {
          width = info$width(),
          height = info$height())
   }, deleteFile = TRUE)
+  
+  # # plot of the isoclines for each species
+  # output$isoclines <- renderPlot({
+  #   p <- ggplot(
+  #     n$isoPoints,
+  #     aes(x = iso12x, y = iso12y, group = isoID)
+  #   ) +
+  #     geom_line() +
+  #     geom_point()
+  # })
   
 }
 
