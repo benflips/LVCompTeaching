@@ -95,10 +95,10 @@ server <- function(input, output, session) {
     if (input$anim == "Yes"){
       p <- ggplot(
         n$short,
-        aes(x = N2, y = N1)
+        aes(x = N1, y = N2)
       ) +
         geom_path(alpha = 0.7, size = 0.9) +
-        labs(x = "Number of species 2", y = "Number of species 1")+
+        labs(x = "Number of species 1", y = "Number of species 2")+
         geom_point()+
         transition_reveal(time)
       
@@ -109,11 +109,11 @@ server <- function(input, output, session) {
     } else {
       p <- ggplot(
         n$short,
-        aes(x = N2, y = N1)
+        aes(x = N1, y = N2)
       ) +
         geom_path(alpha = 0.7, size = 0.9, arrow = arrow()) +
         geom_point()+
-        labs(x = "Number of species 2", y = "Number of species 1")
+        labs(x = "Number of species 1", y = "Number of species 2")
       outfile <- tempfile(tmpdir = "img", fileext = ".png")
       ggsave(filename = outfile, plot = p, width = info$width()/36,
              height = info$height()/36, units = "cm")
