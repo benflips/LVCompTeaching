@@ -46,7 +46,7 @@ server <- function(input, output, session) {
     n$isoPoints <- isoPoints(pList())
   }, ignoreNULL = FALSE)
   
-  #output$test <- renderText(session$clientData$output_myImage_width)
+  #output$test <- renderText(n$isoPoints$iso2)
   
   # Make image gif for N v t
   output$NvtPlot <- renderImage({
@@ -114,7 +114,9 @@ server <- function(input, output, session) {
       ) +
         geom_path(alpha = 0.7, size = 0.9, arrow = arrow()) +
         geom_point()+
-        labs(x = "Number of species 1", y = "Number of species 2")
+        labs(x = "Number of species 1", y = "Number of species 2") +
+        geom_line(data = n$isoPoints, mapping = aes(x = iso12x, y = iso12y, group = isoID))
+        
       outfile <- tempfile(tmpdir = "img", fileext = ".png")
       ggsave(filename = outfile, plot = p, width = info$width()/36,
              height = info$height()/36, units = "cm")
@@ -125,16 +127,6 @@ server <- function(input, output, session) {
          width = info$width(),
          height = info$height())
   }, deleteFile = TRUE)
-  
-  # # plot of the isoclines for each species
-  # output$isoclines <- renderPlot({
-  #   p <- ggplot(
-  #     n$isoPoints,
-  #     aes(x = iso12x, y = iso12y, group = isoID)
-  #   ) +
-  #     geom_line() +
-  #     geom_point()
-  # })
   
 }
 
