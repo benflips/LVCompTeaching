@@ -30,21 +30,46 @@ library(shiny)
 ui <- fluidPage(
 
     # Application title
-    titlePanel("Old Faithful Geyser Data"),
+    titlePanel("Lotka-Volterra Competition"),
 
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
+            sliderInput("N1",
+                        "Initial number of species 1:",
+                        min = 0,
+                        max = 1000,
+                        value = 1),
+            sliderInput("N2",
+                        "Initial number of species 2:",
+                        min = 0,
+                        max = 1000,
+                        value = 1),
+            sliderInput("r1",
+                        "Intrinsic growth rate species 1:",
+                        min = 0,
+                        max = 3,
+                        value = 0.2),
+            sliderInput("r2",
+                        "Intrinsic growth rate species 2:",
+                        min = 0,
+                        max = 3,
+                        value = 0.2),
+            sliderInput("a12",
+                        "Exchange rate, 1 from 2:",
+                        min = 0,
+                        max = 2,
+                        value = 1),
+            sliderInput("a21",
+                        "Exchange rate, 2 from 1:",
+                        min = 0,
+                        max = 2,
+                        value = 1)
         ),
 
         # Show a plot of the generated distribution
         mainPanel(
-           plotOutput("distPlot")
+           #plotOutput("distPlot")
         )
     )
 )
