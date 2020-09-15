@@ -54,13 +54,13 @@ ui <- fluidPage(
                         "Intrinsic growth rate species 1:",
                         min = 0,
                         max = 3,
-                        value = 0.2,
+                        value = 1.0,
                         step = 0.1),
             sliderInput("r2",
                         "Intrinsic growth rate species 2:",
                         min = 0,
                         max = 3,
-                        value = 0.2,
+                        value = 1.1,
                         step = 0.1),
             sliderInput("a12",
                         "Exchange rate, 1 from 2:",
@@ -72,8 +72,20 @@ ui <- fluidPage(
                         "Exchange rate, 2 from 1:",
                         min = 0,
                         max = 2,
-                        value = 1, 
+                        value = 1.1, 
                         step = 0.1),
+            sliderInput("gens",
+                        "Number of generations:",
+                        min = 10,
+                        max = 300,
+                        value = 150, 
+                        step = 10),
+            radioButtons("anim", 
+                         label = "Animate?", 
+                         choices = c("Yes", "No"), 
+                         selected = "No", 
+                         inline = TRUE),
+            p("Note, animation will take a while to process.")
             actionButton("go",
                          "Go!")
         ),
@@ -81,7 +93,10 @@ ui <- fluidPage(
         # Show a plot of the generated distribution
         mainPanel(
             textOutput("test"),
+            h2("Numbers over time: both species"),
             imageOutput("NvtPlot"),
+            p(),
+            h2("The phase plane: N1 vs N2"),
             imageOutput("NvNPlot")
         )
     )

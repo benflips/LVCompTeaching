@@ -29,8 +29,8 @@ source("LVFunctions.R")
 ## ---------------------------
 
 # Define server logic required to draw a histogram
-server <- function(input, output) {
-  uTime <- 20 # upper time limit to run 
+server <- function(input, output, session) {
+
   n <- reactiveValues() # place to put numerical outputs
   
   # isolated reactive for parameter list
@@ -40,48 +40,76 @@ server <- function(input, output) {
   
   # Update on hitting Go
   observeEvent(input$go, {
-    n$short <- LVSolve(N0 = c(N1=1, N2=1), maxTime = uTime, pars = pList())
+    n$short <- LVSolve(N0 = c(N1=1, N2=1), maxTime = input$gens, pars = pList())
     n$long <- pivot_longer(n$short, cols = c(N1, N2), names_to = "sp", values_to = "N")
   })
   
-  output$test <- renderText(pList()$r1)
+  output$test <- renderText(session$clientData$output_myImage_width)
   
   # Make image gif for N v t
   output$NvtPlot <- renderImage({
-    p <- ggplot(
-      n$long,
-      aes(x = time, y = N, group = sp, colour = factor(sp))
-    ) +
-      geom_line(show.legend = FALSE, alpha = 0.7) +
-      scale_colour_brewer() +
-      labs(x = "Time", y = "Number of individuals")+
-      geom_point()+
-      transition_reveal(time)
-    
-    outfile <- tempfile(tmpdir = "img", fileext = ".gif")
-    anim_save(filename = outfile, animation = animate(p, nframes = uTime, fps = uTime/5))
+    info <- getCurrentOutputInfo()
+    if (input$anim == "Yes"){
+      p <- ggplot(
+        n$long,
+        aes(x = time, y = N, group = sp, colour = factor(sp))
+      ) +
+        geom_path(show.legend = FALSE, alpha = 0.7) +
+        labs(x = "Time", y = "Number of individuals")+
+        geom_point()+
+        transition_reveal(time)
+      outfile <- tempfile(tmpdir = "img", fileext = ".gif")
+      nf <- min(input$gens, 100)
+      anim_save(filename = outfile, animation = animate(p, nframes = nf, fps = nf/5))
+    } else {
+      p <- ggplot(
+        n$long,
+        aes(x = time, y = N, group = sp, colour = factor(sp))
+      ) +
+        geom_path(show.legend = FALSE, alpha = 0.7) +
+        labs(x = "Time", y = "Number of individuals")
+      outfile <- tempfile(tmpdir = "img", fileext = ".png")
+      ggsave(filename = outfile, plot = p)
+    }
     
     list(src = outfile,
-         contentType = "image/gif")
+         contentType = "image/gif",
+         width = info$width(),
+         height = info$height())
   }, deleteFile = TRUE)
   
   # Make image gif for N1 v N2
   output$NvNPlot <- renderImage({
-    p <- ggplot(
-      n$short,
-      aes(x = N2, y = N1)
-    ) +
-      geom_line(show.legend = FALSE, alpha = 0.7) +
-      scale_colour_brewer() +
-      labs(x = "Number of species 2", y = "Number of species 1")+
-      geom_point()+
-      transition_reveal(time)
-    
-    outfile <- tempfile(tmpdir = "img", fileext = ".gif")
-    anim_save(filename = outfile, animation = animate(p, nframes = uTime, fps = uTime/5))
+    info <- getCurrentOutputInfo()
+    if (input$anim == "Yes"){
+      p <- ggplot(
+        n$short,
+        aes(x = N2, y = N1)
+      ) +
+        geom_path(show.legend = FALSE, alpha = 0.7) +
+        labs(x = "Number of species 2", y = "Number of species 1")+
+        geom_point()+
+        transition_reveal(time)
+      
+      outfile <- tempfile(tmpdir = "img", fileext = ".gif")
+      nf <- min(input$gens, 100)
+      anim_save(filename = outfile, animation = animate(p, nframes = nf, fps = nf/5))
+    } else {
+      p <- ggplot(
+        n$short,
+        aes(x = N2, y = N1)
+      ) +
+        geom_path(show.legend = FALSE, alpha = 0.7) +
+        geom_point()+
+        labs(x = "Number of species 2", y = "Number of species 1")
+      outfile <- tempfile(tmpdir = "img", fileext = ".png")
+      ggsave(filename = outfile, plot = p)
+    }
     
     list(src = outfile,
-         contentType = "image/gif")
+         contentType = "image/gif",
+         width = info$width(),
+         height = info$height())
   }, deleteFile = TRUE)
   
 }
