@@ -55,7 +55,7 @@ server <- function(input, output, session) {
         n$long,
         aes(x = time, y = N, group = sp, colour = factor(sp))
       ) +
-        geom_path(show.legend = FALSE, alpha = 0.7) +
+        geom_path(show.legend = FALSE, alpha = 0.7, size = 0.9) +
         labs(x = "Time", y = "Number of individuals")+
         geom_point()+
         transition_reveal(time)
@@ -67,7 +67,7 @@ server <- function(input, output, session) {
         n$long,
         aes(x = time, y = N, group = sp, colour = factor(sp))
       ) +
-        geom_path(show.legend = FALSE, alpha = 0.7) +
+        geom_path(show.legend = FALSE, alpha = 0.7, size = 0.9) +
         labs(x = "Time", y = "Number of individuals")
       outfile <- tempfile(tmpdir = "img", fileext = ".png")
       ggsave(filename = outfile, plot = p)
@@ -87,7 +87,7 @@ server <- function(input, output, session) {
         n$short,
         aes(x = N2, y = N1)
       ) +
-        geom_path(show.legend = FALSE, alpha = 0.7) +
+        geom_path(show.legend = FALSE, alpha = 0.7, size = 0.9) +
         labs(x = "Number of species 2", y = "Number of species 1")+
         geom_point()+
         transition_reveal(time)
@@ -100,7 +100,7 @@ server <- function(input, output, session) {
         n$short,
         aes(x = N2, y = N1)
       ) +
-        geom_path(show.legend = FALSE, alpha = 0.7) +
+        geom_path(show.legend = FALSE, alpha = 0.7, size = 0.9, arrow = arrow()) +
         geom_point()+
         labs(x = "Number of species 2", y = "Number of species 1")
       outfile <- tempfile(tmpdir = "img", fileext = ".png")
