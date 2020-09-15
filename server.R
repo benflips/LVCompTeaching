@@ -115,8 +115,11 @@ server <- function(input, output, session) {
         geom_path(alpha = 0.7, size = 0.9, arrow = arrow()) +
         geom_point()+
         labs(x = "Number of species 1", y = "Number of species 2") +
-        geom_line(data = n$isoPoints, mapping = aes(x = iso12x, y = iso12y, group = isoID))
-        
+        geom_line(data = n$isoPoints, mapping = aes(x = iso12x, y = iso12y, group = isoID, color = factor(isoID))) +
+        scale_color_discrete(name="Species isoclines",
+                           breaks=c("1", "2"),
+                           labels=c("1", "2")) +
+        theme(legend.position="top")
       outfile <- tempfile(tmpdir = "img", fileext = ".png")
       ggsave(filename = outfile, plot = p, width = info$width()/36,
              height = info$height()/36, units = "cm")

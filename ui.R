@@ -103,7 +103,7 @@ ui <- fluidPage(
 
         # Show a plot of the generated distribution
         mainPanel(
-            textOutput("test"),
+           # textOutput("test"),
             h2("Numbers over time: both species"),
             imageOutput("NvtPlot"),
             p(),

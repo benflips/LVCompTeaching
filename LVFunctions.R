@@ -43,7 +43,6 @@ LVSolve <- function(N0, maxTime = 100, pars){
 }
 
 # Get critical points for isoclines given parameters
-#TO DO, switch to abline parameters
 isoPoints <- function(pars){
   iso12x <- c(0, pars$K1, 0, pars$K2/pars$a21) # x values
   iso12y <- c(pars$K1/pars$a12, 0, pars$K2, 0)
