@@ -75,7 +75,8 @@ ui <- fluidPage(
         # Show a plot of the generated distribution
         mainPanel(
             textOutput("test"),
-            imageOutput("NvtPlot")
+            imageOutput("NvtPlot"),
+            imageOutput("NvNPlot")
         )
     )
 )
