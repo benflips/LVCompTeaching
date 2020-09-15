@@ -77,7 +77,7 @@ ui <- fluidPage(
                         "Number of generations:",
                         min = 10,
                         max = 300,
-                        value = 150, 
+                        value = 40, 
                         step = 10),
             radioButtons("anim", 
                          label = "Animate?", 
