@@ -53,25 +53,34 @@ server <- function(input, output, session) {
     if (input$anim == "Yes"){
       p <- ggplot(
         n$long,
-        aes(x = time, y = N, group = sp, colour = factor(sp))
+        aes(x = time, y = N, group = sp, color = factor(sp))
       ) +
-        geom_path(show.legend = FALSE, alpha = 0.7, size = 0.9) +
+        scale_color_discrete(name="Species",
+                             breaks=c("N1", "N2"),
+                             labels=c("1", "2")) +
+        geom_path(alpha = 0.7, size = 0.9) +
+        theme(legend.position="top") +
         labs(x = "Time", y = "Number of individuals")+
         geom_point()+
         transition_reveal(time)
       outfile <- tempfile(tmpdir = "img", fileext = ".gif")
       nf <- min(input$gens, 100)
-      anim_save(filename = outfile, animation = animate(p, nframes = nf, fps = nf/5))
+      anim_save(filename = outfile, animation = animate(p, nframes = nf, fps = nf/5, width = info$width(),
+                                                        height = info$height(), units = "px"))
     } else {
       p <- ggplot(
         n$long,
-        aes(x = time, y = N, group = sp, colour = factor(sp))
+        aes(x = time, y = N, group = sp, color = factor(sp))
       ) +
-        geom_path(show.legend = FALSE, alpha = 0.7, size = 0.9) +
+        geom_path(alpha = 0.7, size = 0.9) +
+        scale_color_discrete(name="Species",
+                            breaks=c("N1", "N2"),
+                            labels=c("1", "2")) +
+        theme(legend.position="top") +
         labs(x = "Time", y = "Number of individuals")
       outfile <- tempfile(tmpdir = "img", fileext = ".png")
-      ggsave(filename = outfile, plot = p, width = info$width()/72,
-             height = info$height()/72, units = "cm")
+      ggsave(filename = outfile, plot = p, width = info$width()/36,
+             height = info$height()/36, units = "cm")
     }
     
     list(src = outfile,
@@ -88,25 +97,26 @@ server <- function(input, output, session) {
         n$short,
         aes(x = N2, y = N1)
       ) +
-        geom_path(show.legend = FALSE, alpha = 0.7, size = 0.9) +
+        geom_path(alpha = 0.7, size = 0.9) +
         labs(x = "Number of species 2", y = "Number of species 1")+
         geom_point()+
         transition_reveal(time)
       
       outfile <- tempfile(tmpdir = "img", fileext = ".gif")
       nf <- min(input$gens, 100)
-      anim_save(filename = outfile, animation = animate(p, nframes = nf, fps = nf/5))
+      anim_save(filename = outfile, animation = animate(p, nframes = nf, fps = nf/5, width = info$width(),
+                                                        height = info$height(), units = "px"))
     } else {
       p <- ggplot(
         n$short,
         aes(x = N2, y = N1)
       ) +
-        geom_path(show.legend = FALSE, alpha = 0.7, size = 0.9, arrow = arrow()) +
+        geom_path(alpha = 0.7, size = 0.9, arrow = arrow()) +
         geom_point()+
         labs(x = "Number of species 2", y = "Number of species 1")
       outfile <- tempfile(tmpdir = "img", fileext = ".png")
-      ggsave(filename = outfile, plot = p, width = info$width()/72,
-             height = info$height()/72, units = "cm")
+      ggsave(filename = outfile, plot = p, width = info$width()/36,
+             height = info$height()/36, units = "cm")
     }
     
     list(src = outfile,
