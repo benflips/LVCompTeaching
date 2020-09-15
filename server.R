@@ -38,13 +38,14 @@ server <- function(input, output, session) {
     list(r1=input$r1, r2=input$r2, a12=input$a12, a21=input$a21, K=1000)
   })
   
+
   # Update on hitting Go
   observeEvent(input$go, {
-    n$short <- LVSolve(N0 = c(N1=1, N2=1), maxTime = input$gens, pars = pList())
+    n$short <- LVSolve(N0 = c(N1=input$N1, N2=input$N2), maxTime = input$gens, pars = pList())
     n$long <- pivot_longer(n$short, cols = c(N1, N2), names_to = "sp", values_to = "N")
-  })
+  }, ignoreNULL = FALSE)
   
-  output$test <- renderText(session$clientData$output_myImage_width)
+  #output$test <- renderText(session$clientData$output_myImage_width)
   
   # Make image gif for N v t
   output$NvtPlot <- renderImage({

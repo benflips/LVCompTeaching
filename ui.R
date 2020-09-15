@@ -31,13 +31,12 @@ library(gganimate)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-
     # Application title
     titlePanel("Lotka-Volterra Competition"),
-
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(
+            p("Set parameter values and then hit, go."),
             sliderInput("N1",
                         "Initial number of species 1:",
                         min = 0,
@@ -85,14 +84,14 @@ ui <- fluidPage(
                          choices = c("Yes", "No"), 
                          selected = "No", 
                          inline = TRUE),
-            p("Note, animation will take a while to process.")
+            p("Note, animation may take quit a while to process and it is best to wait."),
             actionButton("go",
                          "Go!")
         ),
 
         # Show a plot of the generated distribution
         mainPanel(
-            textOutput("test"),
+           # textOutput("test"),
             h2("Numbers over time: both species"),
             imageOutput("NvtPlot"),
             p(),
