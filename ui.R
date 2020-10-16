@@ -18,9 +18,7 @@
 ## --------------------------
 ## load up the packages we will need 
 library(shiny)
-library(ggplot2)
-library(gifski)
-library(gganimate)
+library(plotly)
 ## ---------------------------
 
 ## load up our functions into memory
@@ -91,12 +89,6 @@ ui <- fluidPage(
                         max = 300,
                         value = 40, 
                         step = 10),
-            radioButtons("anim", 
-                         label = "Animate?", 
-                         choices = c("Yes", "No"), 
-                         selected = "No", 
-                         inline = TRUE),
-            p("Note, animation may take quit a while to process and it is best to wait."),
             actionButton("go",
                          "Go!")
         ),
@@ -105,10 +97,10 @@ ui <- fluidPage(
         mainPanel(
            # textOutput("test"),
             h2("Numbers over time: both species"),
-            imageOutput("NvtPlot"),
+            plotlyOutput("NvtPlot"),
             p(),
-            h2("The phase plane: N1 vs N2"),
-            imageOutput("NvNPlot")
+            h2("The phase plane: N2 vs N1"),
+            plotlyOutput("NvNPlot")
         )
     )
 )
