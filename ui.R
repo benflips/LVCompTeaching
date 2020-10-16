@@ -21,6 +21,7 @@ library(shiny)
 library(ggplot2)
 library(gifski)
 library(gganimate)
+library(plotly)
 ## ---------------------------
 
 ## load up our functions into memory
@@ -105,7 +106,7 @@ ui <- fluidPage(
         mainPanel(
            # textOutput("test"),
             h2("Numbers over time: both species"),
-            imageOutput("NvtPlot"),
+            plotlyOutput("NvtPlot2"),
             p(),
             h2("The phase plane: N1 vs N2"),
             imageOutput("NvNPlot")
