@@ -62,8 +62,11 @@ server <- function(input, output, session) {
 
   ##### N2 v N1 plot #####  
   output$NvNPlot <- renderPlotly({
-    p <- plot_ly(data = n$short, type = "scatter", mode = "none") %>% 
-      add_trace(y = ~N2, x = ~N1, mode = "lines", col = "black") %>%
+    iso <- n$isoPoints
+    p <- plot_ly(type = "scatter", mode = "none") %>% 
+      add_trace(y = ~iso12y, x = ~iso12x, data = iso[1:2,], mode = "lines") %>%
+      add_trace(y = ~iso12y, x = ~iso12x, data = iso[3:4,], mode = "lines") %>%
+      add_trace(y = ~N2, x = ~N1, mode = "lines", data = n$short) %>%
       layout(
         showlegend = FALSE,
         yaxis = list(title = list(text = "N2"),
