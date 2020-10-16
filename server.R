@@ -49,8 +49,9 @@ server <- function(input, output, session) {
   }, ignoreNULL = FALSE)
   
   #output$test <- renderText(n$isoPoints$iso2)
-  
-  output$NvtPlot2 <- renderPlotly({
+
+  ##### N v t plot #####  
+  output$NvtPlot <- renderPlotly({
     p <- plot_ly(data = n$short, type = "scatter", mode = "none") %>% 
       add_trace(y = ~N1, x = ~time, mode = "lines", name = "N1") %>%
       add_trace(y = ~N2, x = ~time, mode = "lines", name = "N2") %>%
@@ -61,48 +62,7 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
   
-  # Make image gif for N v t
-  output$NvtPlot <- renderImage({
-    info <- getCurrentOutputInfo()
-    if (input$anim == "Yes"){
-      p <- ggplot(
-        n$long,
-        aes(x = time, y = N, group = sp, color = factor(sp))
-      ) +
-        scale_color_discrete(name="Species",
-                             breaks=c("N1", "N2"),
-                             labels=c("1", "2")) +
-        geom_path(alpha = 0.7, size = 0.9) +
-        theme(legend.position="top") +
-        labs(x = "Time", y = "Number of individuals")+
-        geom_point()+
-        transition_reveal(time)
-      outfile <- tempfile(tmpdir = "img", fileext = ".gif")
-      nf <- min(input$gens, 100)
-      anim_save(filename = outfile, animation = animate(p, nframes = nf, fps = nf/5, width = info$width(),
-                                                        height = info$height(), units = "px"))
-    } else {
-      p <- ggplot(
-        n$long,
-        aes(x = time, y = N, group = sp, color = factor(sp))
-      ) +
-        geom_path(alpha = 0.7, size = 0.9) +
-        scale_color_discrete(name="Species",
-                            breaks=c("N1", "N2"),
-                            labels=c("1", "2")) +
-        theme(legend.position="top") +
-        labs(x = "Time", y = "Number of individuals")
-      outfile <- tempfile(tmpdir = "img", fileext = ".png")
-      ggsave(filename = outfile, plot = p, width = info$width()/36,
-             height = info$height()/36, units = "cm")
-    }
-    
-    list(src = outfile,
-         contentType = "image/gif",
-         width = info$width(),
-         height = info$height())
-  }, deleteFile = TRUE)
-  
+
   # Make image gif for N1 v N2
   output$NvNPlot <- renderImage({
     info <- getCurrentOutputInfo()
