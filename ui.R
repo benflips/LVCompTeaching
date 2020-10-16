@@ -106,10 +106,10 @@ ui <- fluidPage(
         mainPanel(
            # textOutput("test"),
             h2("Numbers over time: both species"),
-            plotlyOutput("NvtPlot2"),
+            plotlyOutput("NvtPlot"),
             p(),
             h2("The phase plane: N1 vs N2"),
-            imageOutput("NvNPlot")
+            plotlyOutput("NvNPlot")
         )
     )
 )
