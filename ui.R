@@ -18,9 +18,6 @@
 ## --------------------------
 ## load up the packages we will need 
 library(shiny)
-library(ggplot2)
-library(gifski)
-library(gganimate)
 library(plotly)
 ## ---------------------------
 
