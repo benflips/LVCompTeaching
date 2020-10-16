@@ -89,12 +89,6 @@ ui <- fluidPage(
                         max = 300,
                         value = 40, 
                         step = 10),
-            radioButtons("anim", 
-                         label = "Animate?", 
-                         choices = c("Yes", "No"), 
-                         selected = "No", 
-                         inline = TRUE),
-            p("Note, animation may take quit a while to process and it is best to wait."),
             actionButton("go",
                          "Go!")
         ),
