@@ -99,7 +99,7 @@ ui <- fluidPage(
             h2("Numbers over time: both species"),
             plotlyOutput("NvtPlot"),
             p(),
-            h2("The phase plane: N1 vs N2"),
+            h2("The phase plane: N2 vs N1"),
             plotlyOutput("NvNPlot")
         )
     )

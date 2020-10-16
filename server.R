@@ -64,15 +64,14 @@ server <- function(input, output, session) {
   output$NvNPlot <- renderPlotly({
     iso <- n$isoPoints
     p <- plot_ly(type = "scatter", mode = "none") %>% 
-      add_trace(y = ~iso12y, x = ~iso12x, data = iso[1:2,], mode = "lines") %>%
-      add_trace(y = ~iso12y, x = ~iso12x, data = iso[3:4,], mode = "lines") %>%
-      add_trace(y = ~N2, x = ~N1, mode = "lines", data = n$short) %>%
+      add_trace(y = ~iso12y, x = ~iso12x, data = iso[1:2,], mode = "lines", name = "Isocline, N1") %>%
+      add_trace(y = ~iso12y, x = ~iso12x, data = iso[3:4,], mode = "lines", name = "Isocline, N2") %>%
+      add_trace(y = ~N2, x = ~N1, mode = "lines", data = n$short, showlegend = FALSE) %>%
       layout(
-        showlegend = FALSE,
         yaxis = list(title = list(text = "N2"),
                           type = "linear"),
              xaxis = list(title = list(text = "N1")),
-             legend = list(x = 0)) %>%
+        legend = list(x = 0.7)) %>%
       config(displayModeBar = FALSE)
   })
   
