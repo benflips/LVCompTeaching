@@ -63,10 +63,13 @@ server <- function(input, output, session) {
   ##### N2 v N1 plot #####  
   output$NvNPlot <- renderPlotly({
     iso <- n$isoPoints
+    arrowLoc <- n$short[(nrow(n$short)-1):nrow(n$short),]
+    
     p <- plot_ly(type = "scatter", mode = "none") %>% 
       add_trace(y = ~iso12y, x = ~iso12x, data = iso[1:2,], mode = "lines", name = "Isocline, N1") %>%
       add_trace(y = ~iso12y, x = ~iso12x, data = iso[3:4,], mode = "lines", name = "Isocline, N2") %>%
       add_trace(y = ~N2, x = ~N1, mode = "lines", data = n$short, showlegend = FALSE) %>%
+      add_annotations(y = arrowLoc$N2[2], x = arrowLoc$N1[2], ay = arrowLoc$N2[1], ax = arrowLoc$N1[1], ayref = "y", axref = "x", showarrow = TRUE, text = "") %>%
       layout(
         yaxis = list(title = list(text = "N2"),
                           type = "linear"),
