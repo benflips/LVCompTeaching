@@ -90,7 +90,8 @@ ui <- fluidPage(
                         value = 40, 
                         step = 10),
             actionButton("go",
-                         "Go!")
+                         "Go!"),
+            p(div(HTML("Site code is available <a href = https://github.com/benflips/LVCompTeaching>here</a>.")))
         ),
 
         # Show a plot of the generated distribution
