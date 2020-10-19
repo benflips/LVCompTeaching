@@ -100,7 +100,10 @@ ui <- fluidPage(
             plotlyOutput("NvtPlot"),
             p(),
             h2("The phase plane: N2 vs N1"),
-            plotlyOutput("NvNPlot")
+            plotlyOutput("NvNPlot"),
+            withMathJax(),
+            tableOutput("pointTableN1"),
+            tableOutput("pointTableN2")
         )
     )
 )

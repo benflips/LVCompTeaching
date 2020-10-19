@@ -87,9 +87,17 @@ server <- function(input, output, session) {
   })
   
   ##### Output text #####
+  output$pointTableN1 <- renderTable({
+    iso <- n$isoPoints
+    out <- matrix(iso$iso12x[iso$iso12y == 0], nrow = 1)
+    colnames(out) <- c("K1", "K2/a21")
+    out
+  })
+  
   output$pointTableN2 <- renderTable({
-    is0 <- iso$poiints
-    out <- matrix(iso$iso12y[iso$ID == 2], nrow = 1)
+    iso <- n$isoPoints
+    out <- matrix(iso$iso12y[iso$iso12x == 0], nrow = 1)
+    colnames(out) <- c("K1/a12", "K2")
     out
   })
   
