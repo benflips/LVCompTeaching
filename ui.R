@@ -34,7 +34,7 @@ ui <- fluidPage(
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(
-            p("Set parameter values and then hit, go."),
+            p("Set parameter values, and hit go."),
             sliderInput("N1",
                         "Initial number of species 1:",
                         min = 0,
@@ -96,11 +96,13 @@ ui <- fluidPage(
         # Show a plot of the generated distribution
         mainPanel(
            # textOutput("test"),
-            h2("Numbers over time: both species"),
+            h3("Numbers over time: both species"),
             plotlyOutput("NvtPlot"),
             p(),
-            h2("The phase plane: N2 vs N1"),
+            h3("The phase plane: N2 vs N1"),
+            p("Red trace shows the trajectory of the system over time."),
             plotlyOutput("NvNPlot"),
+            h4("Outcome"),
             textOutput("outcome"),
             tableOutput("pointTableN1"),
             tableOutput("pointTableN2")
