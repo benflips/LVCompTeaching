@@ -62,8 +62,16 @@ server <- function(input, output, session) {
 
   ##### N2 v N1 plot #####  
   output$NvNPlot <- renderPlotly({
-    iso <- n$isoPoints
+    iso <- n$isoPoints # get isocline points
+    # get points to draw arrow on phase plane
     arrowLoc <- n$short[(nrow(n$short)-1):nrow(n$short),]
+    tol <- 0.5
+    if (diff(arrowLoc$N1) <tol | diff(arrowLoc$N2) < tol){
+      diffN1 <- diff(n$short[,"N1"])
+      diffN2 <- diff(n$short[,"N2"])
+      getRow <- max(c(which(diffN1>tol), which(diffN2 > tol)))
+      arrowLoc[1,] <- n$short[getRow,]
+    }
     
     p <- plot_ly(type = "scatter", mode = "none") %>% 
       add_trace(y = ~iso12y, x = ~iso12x, data = iso[1:2,], mode = "lines", name = "Isocline, N1") %>%
