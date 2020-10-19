@@ -86,7 +86,7 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
   
-  ##### Output text #####
+  ##### K comparison tables#####
   output$pointTableN1 <- renderTable({
     iso <- n$isoPoints
     out <- matrix(iso$iso12x[iso$iso12y == 0], nrow = 1)
@@ -98,6 +98,18 @@ server <- function(input, output, session) {
     iso <- n$isoPoints
     out <- matrix(iso$iso12y[iso$iso12x == 0], nrow = 1)
     colnames(out) <- c("K1/a12", "K2")
+    out
+  })
+  
+  ##### Outcome report #####
+  output$outcome <- renderText({
+    iso <- n$isoPoints
+    n2Test <- iso$iso12y[3] > iso$iso12y[1] # K2 > K1/alpha12
+    n1Test <- iso$iso12x[2] > iso$iso12x[4] # K1 > K2/alpha21
+    if (n2Test & n1Test) {out <- "Bistability"} else
+      if (!n2Test & !n1Test) {out <- "Stable coexistence"} else
+        if (n2Test & !n1Test) {out <- "Species 1 goes extinct"} else
+        {out <- "Species 2 goes extinct"}
     out
   })
   
