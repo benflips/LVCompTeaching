@@ -86,6 +86,13 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
   
+  ##### Output text #####
+  output$pointTableN2 <- renderTable({
+    is0 <- iso$poiints
+    out <- matrix(iso$iso12y[iso$ID == 2], nrow = 1)
+    out
+  })
+  
 }
 
 
